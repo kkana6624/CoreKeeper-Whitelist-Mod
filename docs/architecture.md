@@ -44,7 +44,10 @@ CoreKeeperServer_Data/Managed/ 内の競合するDLL (0Harmony.dll, Mono.Cecil.d
 
 Facepunch.Steamworks.Win64.dll (Steam関連の型定義)
 
-Pug.Platform.dll (SteamNetworkingクラス)
+Pug.Other.dll (SteamNetworkingクラスを含む)
+UnityEngine.CoreModule.dll (Unity基本機能)
+UnityEngine.dll (Unity互換性)
+Assembly-CSharp.dll (その他依存)
 
 BepInEx.dll (Mod Loader本体)
 
@@ -54,17 +57,20 @@ BepInEx.dll (Mod Loader本体)
 
 ## 設定のポイント
 - TargetFramework は `netstandard2.1` に固定する (Mono環境用)。
-- 参照パス (`HintPath`) は、Serverの `CoreKeeperServer_Data/Managed/` 配下のDLLを指定する。
+- 参照パス (`HintPath`) は、プロジェクトルートの `Libs/` フォルダ配下のDLLを指定する（GitHub等での共有を考慮）。
 
 # 4. Implementation - Source Code (Plugin.cs & Patch)
 
 ## フック対象
-- **Class**: `Pug.Platform.SteamNetworking`
-- **Method**: `OnConnecting`
+- **Class**: `Pug.Platform.SteamNetworking` (in `Pug.Other.dll`)
+- **Method**: `OnConnecting(Connection, ConnectionInfo)`  ※オーバーロードの曖昧性回避のため引数を明示
 - **Logic**:
     - `ConnectionInfo` から `SteamId` を取得。
     - ホワイトリスト (`whitelist.txt`) と照合。
-    - 不許可の場合、`connection.Close()` で切断し、return `false` で元の処理をキャンセルする。
+    - 不許可の場合:
+        - `connection.Close(false, 0, "Not Whitelisted")` で切断。
+        - `Plugin.Log.LogWarning` でログ出力 (Unityログ基盤の不具合回避のためBepInExロガーを直接使用)。
+        - return `false` で元の処理をキャンセル。
 
 # 5. Deployment Configuration
 

@@ -94,6 +94,9 @@ BepInEx/config/
 # 開発用の一時的なMod出力先
 plugins/
 
+# Dependency DLLs
+Libs/
+
 # ============================================
 #  IDE / Editors
 # ============================================
@@ -101,3 +104,4 @@ plugins/
 .idea/
 *.user
 *.suo
+.vs/
