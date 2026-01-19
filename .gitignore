@@ -52,3 +52,52 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# ============================================
+#  Docker & Infrastructure (Added)
+# ============================================
+
+# 【最重要】環境変数ファイル（DiscordのWebhook URLなどが含まれるため絶対無視）
+.env
+.env.production
+.env.local
+
+# Docker関連の一時ファイルやローカル上書き設定
+docker-compose.override.yml
+.docker/
+
+# ============================================
+#  Core Keeper Server Runtime Data
+# ============================================
+
+# サーバーのセーブデータ、ログ、ワールドデータ（巨大かつバイナリのため無視）
+# docker-compose.yml でマウントしているディレクトリ名に合わせています
+data/
+server_log.txt
+
+# ============================================
+#  Mod Development & BepInEx
+# ============================================
+
+# 解析用にダウンロードした Windows版サーバー本体（再配布禁止・巨大なため）
+CoreKeeperServer/
+steamcmd/
+
+# BepInExのランタイム生成物（ビルド成果物以外は無視）
+# ※ pluginsフォルダ自体は追跡し、中のdllだけ無視する等の調整はお好みで
+BepInEx/core/
+BepInEx/cache/
+BepInEx/interop/
+BepInEx/patchers/
+BepInEx/config/
+
+# 開発用の一時的なMod出力先
+plugins/
+
+# ============================================
+#  IDE / Editors
+# ============================================
+.vscode/
+.idea/
+*.user
+*.suo
