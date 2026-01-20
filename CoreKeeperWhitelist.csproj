@@ -14,10 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Facepunch.Steamworks.Win64">
-      <HintPath>$(ProjectDir)Libs\Facepunch.Steamworks.Win64.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <!-- Facepunch.Steamworks.Win64 removed for cross-platform compatibility -->
     <Reference Include="Pug.Other">
       <HintPath>$(ProjectDir)Libs\Pug.Other.dll</HintPath>
       <Private>False</Private>
